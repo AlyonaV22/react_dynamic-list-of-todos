@@ -1,20 +1,20 @@
 import React from 'react';
 
 type Props = {
-  hasFilterChange: React.Dispatch<React.SetStateAction<string>>;
+  onFilterChange: React.Dispatch<React.SetStateAction<string>>;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   query: string;
   selectFilter: string;
 };
 
 export const TodoFilter: React.FC<Props> = ({
-  hasFilterChange,
+  onFilterChange,
   setQuery,
   query,
   selectFilter,
 }) => {
   const filterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    hasFilterChange(event.target.value);
+    onFilterChange(event.target.value);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

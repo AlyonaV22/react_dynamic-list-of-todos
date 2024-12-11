@@ -14,24 +14,24 @@ export const App: React.FC = () => {
   const [query, setQuery] = useState('');
   const [selectTodo, setSelectTodo] = useState<Todo | null>(null);
   const [selectFilter, setSelectFilter] = useState('all');
-  const [hasLoading, setHasLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadTodos = async () => {
-      setHasLoading(true);
+      setIsLoading(true);
       try {
-        const hasLoadTodos = await getTodos();
+        const loadedTodos = await getTodos();
 
-        setTodos(hasLoadTodos);
+        setTodos(loadedTodos);
       } finally {
-        setHasLoading(false);
+        setIsLoading(false);
       }
     };
 
     loadTodos();
   }, []);
 
-  const isTodos = todos
+  const filteredTodos = todos
     .filter(todo => {
       if (selectFilter === 'active') {
         return !todo.completed;
@@ -64,17 +64,17 @@ export const App: React.FC = () => {
               <TodoFilter
                 query={query}
                 setQuery={setQuery}
-                hasFilterChange={setSelectFilter}
+                onFilterChange={setSelectFilter}
                 selectFilter={selectFilter}
               />
             </div>
 
             <div className="block">
-              {hasLoading && <Loader />}
+              {isLoading && <Loader />}
 
-              {!hasLoading && todos.length > 0 && (
+              {!isLoading && todos.length > 0 && (
                 <TodoList
-                  todos={isTodos}
+                  todos={filteredTodos}
                   selectTodo={selectTodo}
                   setSelectTodo={setSelectTodo}
                 />
